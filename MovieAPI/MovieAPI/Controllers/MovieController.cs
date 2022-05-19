@@ -50,12 +50,12 @@ namespace CreatingAMovieAPI.Controllers
 		}
 
 		[HttpGet("RandomListOfMoviesByInt/{number}")]
-		public List<Movie> RandomListOfMoviesByInt(int number)
+		public List<Movie> RandomListOfMoviesByInt(int num)
 		{
 			Random r = new Random();
 			List<Movie> result = new List<Movie>();
 
-			for (int i = 0; i < number; i++)
+			for (int i = 0; i < num; i++)
 			{
 				result.Add(Movies[r.Next(0, Movies.Count)]);
 			}
@@ -63,30 +63,18 @@ namespace CreatingAMovieAPI.Controllers
 		}
 
 		[HttpGet("FindMovieByKeyword/{searchterm}")]
-		public Movie FindMovieByKeyword(string searchterm)
+		public Movie FindMovieByKeyword(string input)
 		{
-			Movie result = (Movie)Movies.Where(x => x.Title.ToLower() == searchterm.ToLower());
+			Movie result = (Movie)Movies.Where(x => x.Title.ToLower() == input.ToLower());
 			return result;
 		}
 
 		[HttpGet("SearchByKeyWord/{searchterm}")]
-		public List<Movie> SearchByKeyWord(string searchterm)
+		public List<Movie> SearchByKeyWord(string input)
 		{
-			List<Movie> result = Movies.Where(x => x.Title.ToLower().Contains(searchterm.ToLower())).ToList();
+			List<Movie> result = Movies.Where(x => x.Title.ToLower().Contains(input.ToLower())).ToList();
 			return result;
 		}
 
-		[HttpGet("ShowCategories")]
-		public List<Genre> ShowCategories()
-		{
-			List<Genre> categories = new List<Genre>();
-
-			foreach (Genre g in Enum.GetValues(typeof(Genre)))
-			{
-				categories.Add(g);
-			}
-
-			return categories;
-		}
 	}
 }
